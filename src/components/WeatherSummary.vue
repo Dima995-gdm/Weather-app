@@ -8,12 +8,13 @@
             <div class="temp">{{ roundedTemp }} °C</div>
             <div class="weather-desc text-block">{{ cityWeather.weather[0].main }}</div>
         </div>
-        <div class="city text-block">Paris, FR</div>
-        <div class="date text-block">Thu, March 16, 2023</div>
+        <div class="city text-block">{{ cityWeather.name }}, {{ cityWeather.sys.country }}</div>
+        <div class="date text-block">{{ getDate }}</div>
     </div>
 </template>
 
 <script>
+
 export default {
     props: {
         cityWeather: {
@@ -27,6 +28,14 @@ export default {
         },
         pathWeatherImage() {
             return `/src/assets/img/weather-main/${this.cityWeather.weather[0].description}.png`
+        },
+        getDate() {
+            return new Date().toLocaleString('en-US', {
+                year: 'numeric',
+                weekday: 'short',
+                month: 'long',
+                day: 'numeric',
+            })
         }
     }
 }

@@ -38,6 +38,7 @@ import WeatherHighlights from '@/components/WeatherHighlights.vue';
 import Coords from '@/components/Coords.vue';
 import Humidity from '@/components/Humidity.vue';
 import {getCityWeather} from '@/api/axios.js'
+import { ref, onMounted } from 'vue';
 
 export default {
     components: {
@@ -46,25 +47,33 @@ export default {
         Coords,
         Humidity
     },
-    data() {
-        return {
-            city: 'Paris',
-            cityWeather: null,
-            error: null
-        }
-    },
-    methods: {
-        getWeather() {
-            getCityWeather(this.city)
+    setup() {
+        const city = ref('Paris');
+        const cityWeather = ref();
+        const error = ref();
+
+        const getWeather = () => {
+            getCityWeather(city.value)
             .then((response) => {
-                this.cityWeather = response
-                this.error = null
+                cityWeather.value = response
+                error.value = null
             })
-            .catch((error) => this.error = error.response.data)
+            .catch((result) => {
+                error.value = result.response.data
+                console.log(error.value);
+            })
         }
-    },
-    mounted() {
-        this.getWeather()
+
+        onMounted(() => {
+            getWeather()
+        })
+
+        return {
+            city,
+            cityWeather,
+            error,
+            getWeather
+        }
     }
 }
 </script>

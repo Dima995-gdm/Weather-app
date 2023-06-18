@@ -108,6 +108,7 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 import { getTime, getPressure } from '@/helpers/utils'
 
 export default {
@@ -117,20 +118,17 @@ export default {
             required: true
         }
     },
-    computed: {
-        timezone() {
-            return this.cityWeather.timezone
-        },
-        sunriseTime() {
-            return getTime(this.cityWeather.sys.sunrise + this.timezone)
-        },
-        sunsetTime() {
-            return getTime(this.cityWeather.sys.sunset + this.timezone)
-        },
-        pressure() {
-            return getPressure(this.cityWeather.main.pressure)
-        }
+    setup(props) {
+        const timezone = computed(() => props.cityWeather.timezone);
+        const sunriseTime = computed(() => getTime(props.cityWeather.sys.sunrise + timezone.value));
+        const sunsetTime = computed(() => getTime(props.cityWeather.sys.sunset + timezone.value));
+        const pressure = computed(() => getPressure(props.cityWeather.main.pressure));
 
+        return {
+            sunriseTime,
+            sunsetTime,
+            pressure
+        }
     }
 }
 </script>

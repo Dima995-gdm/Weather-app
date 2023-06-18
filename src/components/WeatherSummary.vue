@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 
 export default {
     props: {
@@ -22,20 +23,24 @@ export default {
             required: true
         }
     },
-    computed: {
-        roundedTemp() {
-            return Math.round(this.cityWeather.main.temp)
-        },
-        pathWeatherImage() {
-            return `/src/assets/img/weather-main/${this.cityWeather.weather[0].description}.png`
-        },
-        getDate() {
+    setup(props) {
+        const roundedTemp = computed(() => Math.round(props.cityWeather.main.temp));
+        const pathWeatherImage = computed(() => {
+            return `/src/assets/img/weather-main/${props.cityWeather.weather[0].description}.png`
+        });
+        const getDate = computed(() => {
             return new Date().toLocaleString('en-US', {
                 year: 'numeric',
                 weekday: 'short',
                 month: 'long',
                 day: 'numeric',
             })
+        });
+
+        return {
+            roundedTemp,
+            pathWeatherImage,
+            getDate
         }
     }
 }

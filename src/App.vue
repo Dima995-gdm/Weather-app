@@ -2,7 +2,7 @@
     <div class="page">
         <main class="main">
             <div class="container">
-                <div class="laptop">
+                <div class="laptop" v-if="cityWeather">
                     <div class="sections">
                         <section class="section section-left">
                             <div class="info">
@@ -14,6 +14,7 @@
                                         @keydown.enter="getWeather"
                                     />
                                 </div>
+                                <div class="error" v-if="error">{{ error.message }}</div>
                                 <WeatherSummary :cityWeather = "cityWeather"/>
                             </div>
                         </section>
@@ -22,8 +23,8 @@
                         </section>
                     </div>
                     <div class="sections">
-                        <Coords v-if="cityWeather" :coord="cityWeather.coord"/>
-                        <Humidity v-if="cityWeather" :humidity="cityWeather.main.humidity"/>
+                        <Coords :coord="cityWeather.coord"/>
+                        <Humidity :humidity="cityWeather.main.humidity"/>
                     </div>
                 </div>
             </div>
@@ -54,7 +55,12 @@ export default {
     },
     methods: {
         getWeather() {
-            getCityWeather(this.city).then((response) => this.cityWeather = response)
+            getCityWeather(this.city)
+            .then((response) => {
+                this.cityWeather = response
+                this.error = null
+            })
+            .catch((error) => this.error = error.response.data)
         }
     },
     mounted() {

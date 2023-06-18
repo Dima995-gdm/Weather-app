@@ -441,3 +441,14 @@ a {
 .pic-humidity {
     background-image: url('./img/humidity.png');
 }
+
+.error {
+    font-size: 20px;
+    color: #f54242;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.error::first-letter {
+    text-transform: uppercase;
+}

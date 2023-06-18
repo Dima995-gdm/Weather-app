@@ -1,5 +1,5 @@
 <template>
-    <div class="section highlights" v-if="cityWeather">
+    <div class="section highlights">
         <div class="title">Today's Highlights</div>
         <div class="highlights-wrapper">
             <div class="highlight">

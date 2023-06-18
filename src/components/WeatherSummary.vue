@@ -1,5 +1,5 @@
 <template>
-    <div class="summary" v-if="cityWeather">
+    <div class="summary">
         <div
             :style="`background-image: url('${pathWeatherImage}')`"
             class="pic-main"

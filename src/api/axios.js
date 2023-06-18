@@ -7,8 +7,5 @@ axios.defaults.baseURL = 'https://api.openweathermap.org/data/2.5/weather'
 export const getCityWeather = async (city) => {
     const response = await axios.get(`?q=${city}&units=metric&appid=${API_KEY}`)
     return response.data
-    // axios.get(`?q=${city}&units=metric&appid=${API_KEY}`)
-    // .then((response) => response.data)
-    // .catch((error) => error)
 }
 
